@@ -39,12 +39,12 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="#events" class="btn btn-outline-dark">Circuit Racing</a>
-                    <a href="#events" class="btn btn-outline-dark">Drifting</a>
-                    <a href="#events" class="btn btn-outline-dark">Drag Racing</a>
-                    <a href="#events" class="btn btn-outline-dark">Rally</a>
-                    <a href="#events" class="btn btn-outline-dark">Motocross</a>
-                    <a href="#events" class="btn btn-outline-dark">Track Days</a>
+                    <a href="{{ url_for('main.index') }}#events"
+                       class="btn {% if not selected %}btn-dark{% else %}btn-outline-dark{% endif %}">All</a>
+                    {% for category in categories %}
+                        <a href="{{ url_for('main.index', category=category.name) }}#events"
+                           class="btn {% if selected == category.name %}btn-dark{% else %}btn-outline-dark{% endif %}">{{ category.name }}</a>
+                    {% endfor %}
                 </div>
 
             </div>
@@ -56,168 +56,64 @@
             <div class="container">
 
                 <div class="mb-4">
-                    <h2 class="mb-1">Upcoming Events</h2>
+                    {% if selected %}
+                        <h2 class="mb-1">Open {{ selected }} Events</h2>
+                    {% else %}
+                        <h2 class="mb-1">Upcoming Events</h2>
+                    {% endif %}
                     <p class="text-secondary mb-0">
                         What's happening around the track.
                     </p>
                 </div>
 
+                {% set badges = {'Open': 'success', 'Sold Out': 'danger', 'Cancelled': 'warning', 'Inactive': 'secondary'} %}
+
+                {% if events %}
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-
+                    {% for event in events %}
                     <div class="col">
                         <div class="card event-card h-100">
 
                             <img
-                                src="{{ url_for('static', filename='img/event-drift.jpg') }}"
+                                src="{{ url_for('static', filename=event.image) }}"
                                 class="card-img-top event-image"
-                                alt="Drift cars competing at a motorsport event"
+                                alt="{{ event.title }}"
                             >
 
                             <div class="card-body d-flex flex-column">
 
                                 <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="event-category">Drifting</span>
-                                    <span class="badge text-bg-success">Open</span>
+                                    <span class="event-category">{{ event.category.name }}</span>
+                                    <span class="badge text-bg-{{ badges.get(event.status, 'secondary') }}">{{ event.status }}</span>
                                 </div>
 
-                                <h3 class="card-title h5">Queensland Drift Championship</h3>
+                                <h3 class="card-title h5">{{ event.title }}</h3>
 
-                                <p class="card-text text-secondary">Queensland Raceway</p>
+                                <p class="card-text text-secondary">{{ event.venue.name }}</p>
 
                                 <p class="card-text">
-                                    <strong>17 October 2026</strong><br>
-                                    10:00 AM – 6:00 PM
+                                    <strong>{{ event.date.strftime('%d %B %Y').lstrip('0') }}</strong><br>
+                                    {{ event.start_time.strftime('%I:%M %p').lstrip('0') }} – {{ event.end_time.strftime('%I:%M %p').lstrip('0') }}
                                 </p>
 
                                 <p class="card-text">
-                                    Full-day drifting competition featuring
-                                    drivers from across Queensland.
+                                    {{ event.description | truncate(110) }}
                                 </p>
 
-                                <a href="event.html" class="btn btn-dark mt-auto">View Event</a>
+                                <!-- TODO: link to the event page once IT3-6 is done -->
+                                <a href="#" class="btn btn-dark mt-auto">View Event</a>
 
                             </div>
 
                         </div>
                     </div>
-
-
-                    <div class="col">
-                        <div class="card event-card h-100">
-
-                            <img
-                                src="{{ url_for('static', filename='img/event-circuit.jpg') }}"
-                                class="card-img-top event-image"
-                                alt="Cars racing around a circuit"
-                            >
-
-                            <div class="card-body d-flex flex-column">
-
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="event-category">Circuit Racing</span>
-                                    <span class="badge text-bg-danger">Sold Out</span>
-                                </div>
-
-                                <h3 class="card-title h5">Lakeside Touring Car Weekend</h3>
-
-                                <p class="card-text text-secondary">Lakeside Raceway</p>
-
-                                <p class="card-text">
-                                    <strong>8 November 2026</strong><br>
-                                    9:00 AM – 5:00 PM
-                                </p>
-
-                                <p class="card-text">
-                                    A weekend of touring car racing with
-                                    multiple classes competing throughout the day.
-                                </p>
-
-                                <a href="event.html" class="btn btn-dark mt-auto">View Event</a>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col">
-                        <div class="card event-card h-100">
-
-                            <img
-                                src="{{ url_for('static', filename='img/event-rally.jpg') }}"
-                                class="card-img-top event-image"
-                                alt="Rally car driving on a gravel stage"
-                            >
-
-                            <div class="card-body d-flex flex-column">
-
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="event-category">Rally</span>
-                                    <span class="badge text-bg-warning">Cancelled</span>
-                                </div>
-
-                                <h3 class="card-title h5">Sunshine Coast Rally Sprint</h3>
-
-                                <p class="card-text text-secondary">Sunshine Coast Hinterland</p>
-
-                                <p class="card-text">
-                                    <strong>22 November 2026</strong><br>
-                                    8:00 AM – 4:00 PM
-                                </p>
-
-                                <p class="card-text">
-                                    Gravel rally stages through the Sunshine
-                                    Coast hinterland.
-                                </p>
-
-                                <a href="event.html" class="btn btn-dark mt-auto">View Event</a>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col">
-                        <div class="card event-card h-100">
-
-                            <img
-                                src="{{ url_for('static', filename='img/event-motocross.jpg') }}"
-                                class="card-img-top event-image"
-                                alt="Motocross rider competing on a dirt circuit"
-                            >
-
-                            <div class="card-body d-flex flex-column">
-
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="event-category">Motocross</span>
-                                    <span class="badge text-bg-secondary">Inactive</span>
-                                </div>
-
-                                <h3 class="card-title h5">Winter Motocross Challenge</h3>
-
-                                <p class="card-text text-secondary">Toowoomba Motocross Club</p>
-
-                                <p class="card-text">
-                                    <strong>12 July 2026</strong><br>
-                                    8:30 AM – 3:30 PM
-                                </p>
-
-                                <p class="card-text">
-                                    Club motocross racing across junior and
-                                    senior competition classes.
-                                </p>
-
-                                <a href="event.html" class="btn btn-dark mt-auto">View Event</a>
-
-                            </div>
-
-                        </div>
-                    </div>
-
+                    {% endfor %}
 
                 </div>
+                {% else %}
+                    <p class="text-secondary">No events to show here yet, check back soon.</p>
+                {% endif %}
 
             </div>
 
