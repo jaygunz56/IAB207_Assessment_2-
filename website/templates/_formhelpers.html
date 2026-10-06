@@ -1,0 +1,12 @@
+{# renders a wtforms field with bootstrap styling and any errors underneath #}
+{% macro render_field(field, type_class='form-control') %}
+    <label for="{{ field.id }}" class="form-label">{{ field.label.text }}</label>
+    {% if field.errors %}
+        {{ field(class=type_class ~ ' is-invalid') }}
+        <div class="invalid-feedback">
+            {% for error in field.errors %}{{ error }} {% endfor %}
+        </div>
+    {% else %}
+        {{ field(class=type_class) }}
+    {% endif %}
+{% endmacro %}

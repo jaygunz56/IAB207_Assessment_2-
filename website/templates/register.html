@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}Register | Triumph Motorevents{% endblock %}
+
+{% block content %}
+
+    <main class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+
+                            <h1 class="h3 mb-1">Create an account</h1>
+                            <p class="text-secondary mb-4">
+                                Sign up to book tickets, comment on events and list your own.
+                            </p>
+
+                            <form method="POST" novalidate>
+                                {{ form.hidden_tag() }}
+
+                                <div class="row g-3">
+                                    <div class="col-sm-6">{{ render_field(form.first_name) }}</div>
+                                    <div class="col-sm-6">{{ render_field(form.last_name) }}</div>
+                                    <div class="col-12">{{ render_field(form.email) }}</div>
+                                    <div class="col-12">{{ render_field(form.mobile) }}</div>
+                                    <div class="col-sm-6">{{ render_field(form.password) }}</div>
+                                    <div class="col-sm-6">{{ render_field(form.confirm) }}</div>
+                                </div>
+
+                                {{ form.submit(class='btn btn-danger w-100 mt-4') }}
+                            </form>
+
+                            <p class="text-center mt-3 mb-0">
+                                Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a>
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
