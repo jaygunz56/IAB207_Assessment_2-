@@ -1,0 +1,22 @@
+# Submission bundles (rebuilt for each hand-in)
+*.zip
+
+# Python / Flask
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+instance/
+*.sqlite
+*.db
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Assessment documents (submitted separately, not source)
+*.pdf

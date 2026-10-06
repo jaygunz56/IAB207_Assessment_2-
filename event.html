@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Queensland Drift Championship | Triumph Motorevents</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/style/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+            <a class="navbar-brand fw-bold" href="index.html">Triumph Motorevents</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mainNavigation" aria-controls="mainNavigation"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create-event.html">Create Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html">My Bookings</a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <main class="py-5">
+
+        <div class="container">
+
+            <a href="index.html" class="event-back-link">
+                ← Back to events
+            </a>
+
+
+            <div class="row g-4 mt-1">
+
+                <div class="col-lg-8">
+
+                    <img
+                        src="static/img/event-drift.jpg"
+                        class="event-detail-image"
+                        alt="Drift cars competing at Queensland Raceway"
+                    >
+
+                    <div class="mt-4">
+
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                            <span class="event-category">Drifting</span>
+                            <span class="badge text-bg-success fs-6">Open</span>
+                        </div>
+
+
+                        <h1 class="mt-2">Queensland Drift Championship</h1>
+
+                        <p class="lead text-secondary">A full day of drifting competition at Queensland Raceway.</p>
+
+
+                        <div class="event-info-grid">
+
+                            <div>
+                                <span class="event-info-label">Date</span>
+                                <p>17 October 2026</p>
+                            </div>
+                            <div>
+                                <span class="event-info-label">Time</span>
+                                <p>10:00 AM – 6:00 PM</p>
+                            </div>
+                            <div>
+                                <span class="event-info-label">Venue</span>
+                                <p>Queensland Raceway</p>
+                            </div>
+                            <div>
+                                <span class="event-info-label">Location</span>
+                                <p>Willowbank, Queensland</p>
+                            </div>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <h2 class="h4">
+                            About the event
+                        </h2>
+
+                        <p>
+                            The Queensland Drift Championship brings drivers from
+                            across the state together for a full day of competitive
+                            drifting at Queensland Raceway.
+                        </p>
+
+                        <p>
+                            Spectators can watch qualifying sessions, tandem battles
+                            and the final competition rounds throughout the day.
+                            Food vendors and spectator areas will be available around
+                            the circuit.
+                        </p>
+
+
+                        <h2 class="h4 mt-4">
+                            Event information
+                        </h2>
+
+                        <ul class="event-details-list">
+                            <li>Gates open at 9:00 AM</li>
+                            <li>All ages welcome</li>
+                            <li>Free spectator parking available</li>
+                            <li>Food and drinks available at the venue</li>
+                            <li>Participant and spectator tickets available</li>
+                        </ul>
+
+
+                        <div class="acknowledgement-box mt-4">
+                            <h2 class="h5">
+                                Acknowledgement of Country
+                            </h2>
+
+                            <p class="mb-0">
+                                Triumph Motorevents acknowledges the Traditional
+                                Custodians of the land on which this event is held
+                                and pays respect to Elders past and present.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-4">
+
+                    <div class="card booking-card">
+
+                        <div class="card-body">
+
+                            <h2 class="h4">
+                                Book Tickets
+                            </h2>
+
+                            <p class="text-secondary">
+                                Tickets are still available for this event.
+                            </p>
+
+
+                            <div class="mb-3">
+
+                                <label for="ticketType" class="form-label">
+                                    Ticket Type
+                                </label>
+
+                                <select class="form-select" id="ticketType">
+                                    <option selected>Spectator - $35.00</option>
+                                    <option>Participant Entry - $120.00</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <label for="ticketQuantity" class="form-label">
+                                    Number of Tickets
+                                </label>
+
+                                <select class="form-select" id="ticketQuantity">
+                                    <option selected>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="booking-summary mb-3">
+
+                                <div class="d-flex justify-content-between">
+                                    <span>Price</span>
+                                    <strong>$35.00</strong>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <span>Tickets remaining</span>
+                                    <strong>84</strong>
+                                </div>
+
+                            </div>
+
+
+                            <button type="button" class="btn btn-danger w-100">
+                                Book Now
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <section class="comments-section mt-5">
+
+                <div class="row">
+
+                    <div class="col-lg-8">
+
+                        <h2>
+                            Comments
+                        </h2>
+
+
+                        <div class="comment-card">
+
+                            <div class="d-flex justify-content-between">
+                                <strong>Daniel R.</strong>
+                                <span class="text-secondary">2 September 2026</span>
+                            </div>
+
+                            <p class="mb-0 mt-2">
+                                Went last year and it was a great day. Definitely
+                                recommend getting there early for a good viewing spot.
+                            </p>
+
+                        </div>
+
+
+                        <div class="comment-card">
+
+                            <div class="d-flex justify-content-between">
+                                <strong>Sarah M.</strong>
+                                <span class="text-secondary">4 September 2026</span>
+                            </div>
+
+                            <p class="mb-0 mt-2">
+                                Does anyone know if the spectator parking fills up
+                                quickly in the morning?
+                            </p>
+
+                        </div>
+
+
+                        <div class="card mt-4">
+
+                            <div class="card-body">
+
+                                <h3 class="h5">
+                                    Leave a Comment
+                                </h3>
+
+                                <div class="mb-3">
+
+                                    <label for="commentText" class="form-label">
+                                        Comment
+                                    </label>
+
+                                    <textarea
+                                        class="form-control"
+                                        id="commentText"
+                                        rows="4"
+                                        placeholder="Write your comment here..."
+                                    ></textarea>
+
+                                </div>
+
+                                <button type="button" class="btn btn-dark">
+                                    Post Comment
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer py-4">
+        <div class="container">
+
+            <div class="d-flex flex-column flex-md-row justify-content-between">
+                <p class="mb-2 mb-md-0">Triumph Motorevents</p>
+                <p class="mb-0">Find your next event on or off the track.</p>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

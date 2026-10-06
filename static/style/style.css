@@ -1,0 +1,283 @@
+body {
+    background-color: #f5f5f5;
+    color: #202020;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+.hero-section {
+    background-color: #171717;
+    color: white;
+    padding: 90px 0;
+    border-bottom: 5px solid #c62828;
+    /* tried background-image here but went with solid colour */
+}
+
+.hero-section h1 {
+    max-width: 800px;
+}
+
+.hero-section .lead {
+    max-width: 700px;
+    color: #d5d5d5;
+}
+
+.hero-label {
+    color: #ef5350;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.events-section {
+    background-color: #eeeeee;
+}
+
+.event-card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.event-image {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.event-category {
+    color: #6c757d;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-danger {
+    background-color: #c62828;
+    border-color: #c62828;
+}
+
+.btn-danger:hover {
+    background-color: #a91f1f;
+    border-color: #a91f1f;
+}
+
+.site-footer {
+    background-color: #171717;
+    color: #d5d5d5;
+}
+
+@media (max-width: 767px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2.3rem;
+    }
+
+    .event-image {
+        height: 200px;
+    }
+}
+
+.event-back-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.event-back-link:hover {
+    color: #c62828;
+}
+
+.event-detail-image {
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.event-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.event-info-grid p {
+    margin-bottom: 0;
+}
+
+.event-info-label {
+    display: block;
+    color: #6c757d;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.event-details-list {
+    padding-left: 20px;
+}
+
+.event-details-list li {
+    margin-bottom: 8px;
+}
+
+.booking-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-card .card-body {
+    padding: 25px;
+}
+
+.booking-summary {
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.acknowledgement-box {
+    background-color: #eeeeee;
+    border-left: 4px solid #c62828;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.comments-section {
+    border-top: 1px solid #d6d6d6;
+    padding-top: 40px;
+}
+
+.comment-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 767px) {
+    .event-detail-image {
+        height: 260px;
+    }
+
+    .event-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.form-page-heading {
+    max-width: 750px;
+}
+
+.event-form-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.event-form-card .card-body {
+    padding: 35px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@media (max-width: 767px) {
+    .event-form-card .card-body {
+        padding: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+.bookings-heading {
+    max-width: 750px;
+}
+
+.booking-history-card {
+    border: none;
+    overflow: hidden;
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.08);
+}
+
+.booking-history-image {
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    object-fit: cover;
+}
+
+.booking-history-card .card-body {
+    padding: 25px;
+}
+
+.booking-id-box {
+    background-color: #eeeeee;
+    border-radius: 6px;
+    padding: 12px 18px;
+    min-width: 150px;
+}
+
+.booking-id-box strong {
+    display: block;
+    font-size: 1.05rem;
+}
+
+.booking-label {
+    display: block;
+    color: #6c757d;
+    font-size: 0.78rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.booking-details {
+    border-top: 1px solid #dddddd;
+    padding-top: 18px;
+}
+
+@media (max-width: 767px) {
+    .booking-history-image {
+        height: 220px;
+        min-height: 0;
+    }
+
+    .booking-history-card .card-body {
+        padding: 20px;
+    }
+
+    .booking-id-box {
+        width: 100%;
+    }
+}
