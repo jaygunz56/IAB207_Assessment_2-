@@ -25,14 +25,28 @@
             </button>
 
             <div class="collapse navbar-collapse" id="mainNavigation">
+
+                <form class="d-flex my-2 my-lg-0 ms-lg-4" action="{{ url_for('main.search') }}" method="get">
+                    <input
+                        class="form-control form-control-sm me-2"
+                        type="search"
+                        name="search"
+                        placeholder="Search events"
+                        aria-label="Search events"
+                        value="{{ search or '' }}"
+                    >
+                    <button class="btn btn-outline-light btn-sm" type="submit">
+                        Search
+                    </button>
+                </form>
+
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">Events</a>
                     </li>
-                    <!-- TODO: point these at the real routes once they're built -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Create Event</a>
+                        <a class="nav-link {% if request.endpoint == 'event.create' %}active{% endif %}" href="{{ url_for('event.create') }}">Create Event</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Bookings</a>
@@ -60,7 +74,6 @@
         </div>
     </nav>
 
-    <!-- flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="container mt-3">
