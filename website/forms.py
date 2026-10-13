@@ -1,6 +1,11 @@
+from datetime import date
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Email, EqualTo, Length, Regexp
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField
+from wtforms import DateField, TimeField, FloatField, IntegerField, BooleanField
+from wtforms.validators import InputRequired, Email, EqualTo, Length, Regexp, NumberRange, ValidationError
+
+ALLOWED_FILE = {'png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG'}
 
 
 class RegisterForm(FlaskForm):
@@ -23,3 +28,41 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired()])
     submit = SubmitField('Log in')
+
+
+class EventForm(FlaskForm):
+    title = StringField('Event Name', validators=[InputRequired(), Length(max=100)])
+    # choices get filled in from the db in the route
+    category = SelectField('Category', coerce=int, validators=[InputRequired()])
+    description = TextAreaField('Description', validators=[InputRequired(), Length(max=2000)])
+    image = FileField('Event Image', validators=[
+        FileRequired(message='Please upload an image for the event'),
+        FileAllowed(ALLOWED_FILE, message='Only png or jpg images are allowed')])
+
+    date = DateField('Event Date', validators=[InputRequired()])
+    start_time = TimeField('Start Time', validators=[InputRequired()])
+    end_time = TimeField('End Time', validators=[InputRequired()])
+    venue_name = StringField('Venue', validators=[InputRequired(), Length(max=100)])
+    venue_address = StringField('Venue Address', validators=[InputRequired(), Length(max=200)])
+    parking_info = TextAreaField('Parking Information', validators=[Length(max=500)])
+
+    ticket_type = SelectField('Ticket Type', choices=['Spectator', 'Participant Entry'])
+    ticket_price = FloatField('Ticket Price', validators=[InputRequired(), NumberRange(min=0)])
+    ticket_quantity = IntegerField('Tickets Available', validators=[InputRequired(), NumberRange(min=1)])
+
+    age_restriction = SelectField('Age Restriction', choices=['All ages', '12+', '16+', '18+'])
+    acknowledgement = SelectField('Acknowledgement of Country', choices=[
+        ('none', 'No Acknowledgement of Country'),
+        ('generic', 'Acknowledgement of Country: generic'),
+        ('enhanced', 'Acknowledgement of Country: enhanced')])
+    spectator_access = BooleanField('Spectator access is available', default=True)
+
+    submit = SubmitField('Create Event')
+
+    def validate_date(self, field):
+        if field.data < date.today():
+            raise ValidationError("Event date can't be in the past")
+
+    def validate_end_time(self, field):
+        if self.start_time.data and field.data <= self.start_time.data:
+            raise ValidationError('End time needs to be after the start time')
