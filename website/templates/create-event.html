@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Create Event | Triumph Motorevents{% endblock %}
+{% block title %}{% if event %}Edit Event{% else %}Create Event{% endif %} | Triumph Motorevents{% endblock %}
 
 {% block content %}
 
@@ -13,13 +13,23 @@
                     Event Management
                 </p>
 
-                <h1>
-                    Create a Motorsport Event
-                </h1>
+                {% if event %}
+                    <h1>
+                        Edit {{ event.title }}
+                    </h1>
 
-                <p class="text-secondary">
-                    Add the event details below to create a new listing.
-                </p>
+                    <p class="text-secondary">
+                        Update the details below and save your changes.
+                    </p>
+                {% else %}
+                    <h1>
+                        Create a Motorsport Event
+                    </h1>
+
+                    <p class="text-secondary">
+                        Add the event details below to create a new listing.
+                    </p>
+                {% endif %}
             </div>
 
 
@@ -27,7 +37,7 @@
 
                 <div class="card-body">
 
-                    <form action="{{ url_for('event.create') }}" method="post" enctype="multipart/form-data">
+                    <form action="{% if event %}{{ url_for('event.edit', id=event.id) }}{% else %}{{ url_for('event.create') }}{% endif %}" method="post" enctype="multipart/form-data">
 
                         {{ form.hidden_tag() }}
 
@@ -112,8 +122,11 @@
                                     id="eventImage"
                                     name="image"
                                     accept="image/png, image/jpeg"
-                                    required
+                                    {% if not event %}required{% endif %}
                                 >
+                                {% if event %}
+                                    <div class="form-text">Leave this empty to keep the current image.</div>
+                                {% endif %}
                                 {% for error in form.image.errors %}
                                     <div class="invalid-feedback">{{ error }}</div>
                                 {% endfor %}
@@ -404,13 +417,23 @@
 
                         <div class="form-actions mt-5">
 
-                            <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">
-                                Cancel
-                            </a>
+                            {% if event %}
+                                <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-outline-secondary">
+                                    Cancel
+                                </a>
 
-                            <button type="submit" class="btn btn-danger">
-                                Create Event
-                            </button>
+                                <button type="submit" class="btn btn-danger">
+                                    Save Changes
+                                </button>
+                            {% else %}
+                                <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">
+                                    Cancel
+                                </a>
+
+                                <button type="submit" class="btn btn-danger">
+                                    Create Event
+                                </button>
+                            {% endif %}
 
                         </div>
 

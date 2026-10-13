@@ -66,3 +66,20 @@ class EventForm(FlaskForm):
     def validate_end_time(self, field):
         if self.start_time.data and field.data <= self.start_time.data:
             raise ValidationError('End time needs to be after the start time')
+
+
+class EditEventForm(EventForm):
+    # same as the create form but the image is optional when editing
+    image = FileField('Event Image', validators=[FileAllowed(ALLOWED_FILE, message='Only png or jpg images are allowed')])
+    submit = SubmitField('Save Changes')
+
+
+class CommentForm(FlaskForm):
+    text = TextAreaField('Comment', validators=[InputRequired(), Length(max=400)])
+    submit = SubmitField('Post Comment')
+
+
+class BookingForm(FlaskForm):
+    ticket_type = SelectField('Ticket Type', coerce=int)
+    quantity = IntegerField('Number of Tickets', validators=[InputRequired(), NumberRange(min=1, max=5)])
+    submit = SubmitField('Book Now')

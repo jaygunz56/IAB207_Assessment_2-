@@ -156,75 +156,119 @@
                             {% endif %}
 
 
-                            <div class="mb-3">
+                            <form action="{{ url_for('event.book', id=event.id) }}" method="post">
 
-                                <label for="ticketType" class="form-label">
-                                    Ticket Type
-                                </label>
+                                {{ booking_form.hidden_tag() }}
 
-                                <select class="form-select" id="ticketType">
-                                    {% for ticket in event.ticket_types %}
-                                        <option>{{ ticket.name }} - ${{ '%.2f' % ticket.price }}</option>
-                                    {% endfor %}
-                                </select>
+                                <div class="mb-3">
 
-                            </div>
+                                    <label for="ticketType" class="form-label">
+                                        Ticket Type
+                                    </label>
 
+                                    <select class="form-select" id="ticketType" name="ticket_type">
+                                        {% for ticket in event.ticket_types %}
+                                            <option value="{{ ticket.id }}">{{ ticket.name }} - ${{ '%.2f' % ticket.price }}</option>
+                                        {% endfor %}
+                                    </select>
 
-                            <div class="mb-3">
-
-                                <label for="ticketQuantity" class="form-label">
-                                    Number of Tickets
-                                </label>
-
-                                <select class="form-select" id="ticketQuantity">
-                                    <option selected>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-
-                            </div>
-
-
-                            {% if event.ticket_types %}
-                            <div class="booking-summary mb-3">
-
-                                <div class="d-flex justify-content-between">
-                                    <span>Price</span>
-                                    <strong>${{ '%.2f' % event.ticket_types[0].price }}</strong>
                                 </div>
 
-                                <div class="d-flex justify-content-between">
-                                    <span>Tickets remaining</span>
-                                    <strong>{{ event.ticket_types[0].quantity_available }}</strong>
+
+                                <div class="mb-3">
+
+                                    <label for="ticketQuantity" class="form-label">
+                                        Number of Tickets
+                                    </label>
+
+                                    <select class="form-select" id="ticketQuantity" name="quantity">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
                                 </div>
 
-                            </div>
-                            {% endif %}
+
+                                {% if event.ticket_types %}
+                                <div class="booking-summary mb-3">
+
+                                    <div class="d-flex justify-content-between">
+                                        <span>Price</span>
+                                        <strong>${{ '%.2f' % event.ticket_types[0].price }}</strong>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <span>Tickets remaining</span>
+                                        <strong>{{ event.ticket_types[0].quantity_available }}</strong>
+                                    </div>
+
+                                </div>
+                                {% endif %}
 
 
-                            {% if event.status == 'Open' %}
-                                <button type="button" class="btn btn-danger w-100">
-                                    Book Now
-                                </button>
-                            {% else %}
-                                <button type="button" class="btn btn-secondary w-100" disabled>
-                                    Booking Unavailable
-                                </button>
-                            {% endif %}
+                                {% if event.status != 'Open' %}
+                                    <button type="button" class="btn btn-secondary w-100" disabled>
+                                        Booking Unavailable
+                                    </button>
+                                {% elif current_user.is_authenticated %}
+                                    <button type="submit" class="btn btn-danger w-100">
+                                        Book Now
+                                    </button>
+                                {% else %}
+                                    <a href="{{ url_for('auth.login', next=request.path) }}" class="btn btn-danger w-100">
+                                        Log in to Book
+                                    </a>
+                                {% endif %}
+
+                            </form>
 
                         </div>
 
                     </div>
+
+
+                    {% if current_user.is_authenticated and current_user.id == event.user_id and event.status != 'Cancelled' %}
+                    <div class="card booking-card mt-4">
+
+                        <div class="card-body">
+
+                            <h2 class="h5">
+                                Manage your event
+                            </h2>
+
+                            <p class="text-secondary">
+                                You created this event, so you can update or cancel it.
+                            </p>
+
+                            <a href="{{ url_for('event.edit', id=event.id) }}" class="btn btn-dark w-100 mb-2">
+                                Edit Event
+                            </a>
+
+                            <form
+                                action="{{ url_for('event.cancel', id=event.id) }}"
+                                method="post"
+                                onsubmit="return confirm('Are you sure you want to cancel this event?');"
+                            >
+                                {{ comment_form.csrf_token }}
+                                <button type="submit" class="btn btn-outline-danger w-100">
+                                    Cancel Event
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+                    {% endif %}
 
                 </div>
 
             </div>
 
 
-            <section class="comments-section mt-5">
+            <section class="comments-section mt-5" id="comments">
 
                 <div class="row">
 
@@ -253,6 +297,53 @@
                             No comments yet.
                         </p>
                         {% endfor %}
+
+
+                        <div class="card mt-4">
+
+                            <div class="card-body">
+
+                                <h3 class="h5">
+                                    Leave a Comment
+                                </h3>
+
+                                {% if current_user.is_authenticated %}
+                                <form action="{{ url_for('event.comment', id=event.id) }}" method="post">
+
+                                    {{ comment_form.hidden_tag() }}
+
+                                    <div class="mb-3">
+
+                                        <label for="commentText" class="form-label">
+                                            Comment
+                                        </label>
+
+                                        <textarea
+                                            class="form-control"
+                                            id="commentText"
+                                            name="text"
+                                            rows="4"
+                                            maxlength="400"
+                                            placeholder="Write your comment here..."
+                                            required
+                                        ></textarea>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-dark">
+                                        Post Comment
+                                    </button>
+
+                                </form>
+                                {% else %}
+                                <p class="mb-0">
+                                    <a href="{{ url_for('auth.login', next=request.path) }}">Log in</a> to leave a comment.
+                                </p>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
 
                     </div>
 
