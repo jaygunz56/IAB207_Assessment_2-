@@ -1,6 +1,7 @@
 from datetime import date
-from flask import Blueprint, render_template, request, redirect, url_for
-from .models import Event, Category
+from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask_login import login_required, current_user
+from .models import Event, Category, Booking
 from . import db
 
 mainbp = Blueprint('main', __name__)
@@ -35,3 +36,22 @@ def search():
 
     categories = Category.query.order_by(Category.name).all()
     return render_template('index.html', events=events, categories=categories, search=search)
+
+
+@mainbp.route('/bookings')
+@login_required
+def bookings():
+    bookings = Booking.query.filter_by(user_id=current_user.id).order_by(Booking.booked_at.desc()).all()
+    return render_template('bookings.html', bookings=bookings)
+
+
+@mainbp.route('/bookings/<int:id>')
+@login_required
+def booking(id):
+    booking = db.get_or_404(Booking, id)
+
+    # people can only see their own bookings
+    if booking.user_id != current_user.id:
+        abort(404)
+
+    return render_template('booking-confirmation.html', booking=booking)

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from flask_login import UserMixin
 from . import db
 
@@ -68,6 +68,25 @@ class Event(db.Model):
     comments = db.relationship('Comment', backref='event', cascade='all, delete-orphan')
     bookings = db.relationship('Booking', backref='event')
 
+    def update_status(self):
+        # cancelled is set by the organiser so leave it alone
+        if self.status == 'Cancelled':
+            return
+
+        now = datetime.now()
+        if self.date < date.today() or (self.date == date.today() and self.end_time < now.time()):
+            self.status = 'Inactive'
+            return
+
+        tickets_left = 0
+        for ticket in self.ticket_types:
+            tickets_left = tickets_left + ticket.quantity_available
+
+        if tickets_left == 0:
+            self.status = 'Sold Out'
+        else:
+            self.status = 'Open'
+
     def __repr__(self):
         return f"Event: {self.title}"
 
@@ -98,8 +117,13 @@ class Booking(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_types.id'))
 
+    @property
+    def reference(self):
+        # booking ids look like TM-10001 instead of just 1
+        return 'TM-' + str(10000 + self.id)
+
     def __repr__(self):
-        return f"Booking: {self.id}"
+        return f"Booking: {self.reference}"
 
 
 class Comment(db.Model):

@@ -1,4 +1,5 @@
-from flask import Flask
+from datetime import date
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
@@ -29,6 +30,18 @@ def create_app():
     with app.app_context():
         db.create_all()
         add_categories()
+
+    @app.before_request
+    def check_finished_events():
+        # anything that's already finished gets marked as inactive
+        if request.endpoint == 'static':
+            return
+
+        from .models import Event
+        events = Event.query.filter(Event.status.in_(['Open', 'Sold Out']), Event.date <= date.today()).all()
+        for event in events:
+            event.update_status()
+        db.session.commit()
 
     from . import views
     app.register_blueprint(views.mainbp)

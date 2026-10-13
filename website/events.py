@@ -98,9 +98,8 @@ def edit(id):
         ticket.price = form.ticket_price.data
         ticket.quantity_available = form.ticket_quantity.data
 
-        # if more tickets were added it can be booked again
-        if event.status == 'Sold Out' and ticket.quantity_available > 0:
-            event.status = 'Open'
+        # might be sold out or open again depending on the new ticket numbers
+        event.update_status()
 
         db.session.commit()
         flash('Your event has been updated', 'success')
@@ -183,18 +182,13 @@ def book(id):
                           event=event,
                           ticket_type=ticket)
         ticket.quantity_available = ticket.quantity_available - form.quantity.data
-
-        # sold out once there are no tickets left of any type
-        tickets_left = 0
-        for t in event.ticket_types:
-            tickets_left = tickets_left + t.quantity_available
-        if tickets_left == 0:
-            event.status = 'Sold Out'
+        event.update_status()
 
         db.session.add(booking)
         db.session.commit()
 
-        flash(f'Booking confirmed! Your booking ID is #{booking.id}', 'success')
+        flash('Booking confirmed!', 'success')
+        return redirect(url_for('main.booking', id=booking.id))
     else:
         flash('Please pick a ticket type and between 1 and 5 tickets', 'danger')
 
