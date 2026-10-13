@@ -20,3 +20,6 @@ desktop.ini
 
 # Assessment documents (submitted separately, not source)
 *.pdf
+
+# Event images uploaded while testing
+website/static/img/uploads/

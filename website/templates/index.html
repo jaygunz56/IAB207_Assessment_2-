@@ -56,7 +56,9 @@
             <div class="container">
 
                 <div class="mb-4">
-                    {% if selected %}
+                    {% if search %}
+                        <h2 class="mb-1">Results for "{{ search }}"</h2>
+                    {% elif selected %}
                         <h2 class="mb-1">Open {{ selected }} Events</h2>
                     {% else %}
                         <h2 class="mb-1">Upcoming Events</h2>
@@ -65,8 +67,6 @@
                         What's happening around the track.
                     </p>
                 </div>
-
-                {% set badges = {'Open': 'success', 'Sold Out': 'danger', 'Cancelled': 'warning', 'Inactive': 'secondary'} %}
 
                 {% if events %}
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -85,7 +85,15 @@
 
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <span class="event-category">{{ event.category.name }}</span>
-                                    <span class="badge text-bg-{{ badges.get(event.status, 'secondary') }}">{{ event.status }}</span>
+                                    {% if event.status == 'Open' %}
+                                        <span class="badge text-bg-success">Open</span>
+                                    {% elif event.status == 'Sold Out' %}
+                                        <span class="badge text-bg-danger">Sold Out</span>
+                                    {% elif event.status == 'Cancelled' %}
+                                        <span class="badge text-bg-warning">Cancelled</span>
+                                    {% else %}
+                                        <span class="badge text-bg-secondary">Inactive</span>
+                                    {% endif %}
                                 </div>
 
                                 <h3 class="card-title h5">{{ event.title }}</h3>
@@ -101,8 +109,7 @@
                                     {{ event.description | truncate(110) }}
                                 </p>
 
-                                <!-- TODO: link to the event page once IT3-6 is done -->
-                                <a href="#" class="btn btn-dark mt-auto">View Event</a>
+                                <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-dark mt-auto">View Event</a>
 
                             </div>
 
@@ -112,7 +119,11 @@
 
                 </div>
                 {% else %}
-                    <p class="text-secondary">No events to show here yet, check back soon.</p>
+                    {% if search %}
+                        <p class="text-secondary">No events matched your search.</p>
+                    {% else %}
+                        <p class="text-secondary">No events to show here yet, check back soon.</p>
+                    {% endif %}
                 {% endif %}
 
             </div>
