@@ -90,7 +90,7 @@
                                             </span>
 
                                             <p class="mb-0">
-                                                {{ booking.event.date.strftime('%d %B %Y') }}
+                                                {{ booking.event.date | nicedate }}
                                             </p>
 
                                         </div>
@@ -116,7 +116,7 @@
                                             </span>
 
                                             <p class="mb-0">
-                                                {{ booking.booked_at.strftime('%d %B %Y') }}
+                                                {{ booking.booked_at | nicedate }}
                                             </p>
 
                                         </div>
@@ -129,7 +129,7 @@
                                             </span>
 
                                             <p class="mb-0">
-                                                {{ booking.booked_at.strftime('%I:%M %p') }}
+                                                {{ booking.booked_at | nicetime }}
                                             </p>
 
                                         </div>

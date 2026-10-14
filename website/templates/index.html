@@ -101,8 +101,8 @@
                                 <p class="card-text text-secondary">{{ event.venue.name }}</p>
 
                                 <p class="card-text">
-                                    <strong>{{ event.date.strftime('%d %B %Y').lstrip('0') }}</strong><br>
-                                    {{ event.start_time.strftime('%I:%M %p').lstrip('0') }} – {{ event.end_time.strftime('%I:%M %p').lstrip('0') }}
+                                    <strong>{{ event.date | nicedate }}</strong><br>
+                                    {{ event.start_time | nicetime }} – {{ event.end_time | nicetime }}
                                 </p>
 
                                 <p class="card-text">

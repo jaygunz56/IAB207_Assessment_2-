@@ -51,11 +51,11 @@
 
                             <div>
                                 <span class="event-info-label">Date</span>
-                                <p>{{ event.date.strftime('%d %B %Y') }}</p>
+                                <p>{{ event.date | nicedate }}</p>
                             </div>
                             <div>
                                 <span class="event-info-label">Time</span>
-                                <p>{{ event.start_time.strftime('%I:%M %p') }} – {{ event.end_time.strftime('%I:%M %p') }}</p>
+                                <p>{{ event.start_time | nicetime }} – {{ event.end_time | nicetime }}</p>
                             </div>
                             <div>
                                 <span class="event-info-label">Venue</span>
@@ -296,7 +296,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <strong>{{ comment.user.first_name }} {{ comment.user.last_name[0] }}.</strong>
-                                <span class="text-secondary">{{ comment.created_at.strftime('%d %B %Y') }}</span>
+                                <span class="text-secondary">{{ comment.created_at | nicedate }}</span>
                             </div>
 
                             <p class="mb-0 mt-2">

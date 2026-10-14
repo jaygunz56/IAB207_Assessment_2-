@@ -1,48 +1,181 @@
 {% extends "base.html" %}
-{% from "_formhelpers.html" import render_field %}
 
 {% block title %}Register | Triumph Motorevents{% endblock %}
 
 {% block content %}
 
     <main class="py-5">
+
         <div class="container">
+
             <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
 
-                    <div class="card shadow-sm">
-                        <div class="card-body p-4">
+                <div class="col-lg-7">
 
-                            <h1 class="h3 mb-1">Create an account</h1>
-                            <p class="text-secondary mb-4">
-                                Sign up to book tickets, comment on events and list your own.
-                            </p>
+                    <div class="form-page-heading mb-4">
 
-                            <form method="POST" novalidate>
+                        <p class="hero-label mb-2">
+                            Join Triumph Motorevents
+                        </p>
+
+                        <h1>
+                            Create an Account
+                        </h1>
+
+                        <p class="text-secondary">
+                            Sign up to book tickets, comment on events and list your own.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card event-form-card">
+
+                        <div class="card-body">
+
+                            <form method="post" novalidate>
+
                                 {{ form.hidden_tag() }}
 
                                 <div class="row g-3">
-                                    <div class="col-sm-6">{{ render_field(form.first_name) }}</div>
-                                    <div class="col-sm-6">{{ render_field(form.last_name) }}</div>
-                                    <div class="col-12">{{ render_field(form.email) }}</div>
-                                    <div class="col-12">{{ render_field(form.mobile) }}</div>
-                                    <div class="col-sm-6">{{ render_field(form.password) }}</div>
-                                    <div class="col-sm-6">{{ render_field(form.confirm) }}</div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label for="firstName" class="form-label">
+                                            First Name
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
+                                            id="firstName"
+                                            name="first_name"
+                                            value="{{ form.first_name.data or '' }}"
+                                            required
+                                        >
+                                        {% for error in form.first_name.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6">
+                                        <label for="lastName" class="form-label">
+                                            Last Name
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
+                                            id="lastName"
+                                            name="last_name"
+                                            value="{{ form.last_name.data or '' }}"
+                                            required
+                                        >
+                                        {% for error in form.last_name.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">
+                                            Email
+                                        </label>
+
+                                        <input
+                                            type="email"
+                                            class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                                            id="email"
+                                            name="email"
+                                            value="{{ form.email.data or '' }}"
+                                            required
+                                        >
+                                        {% for error in form.email.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <label for="mobile" class="form-label">
+                                            Mobile Number
+                                        </label>
+
+                                        <input
+                                            type="tel"
+                                            class="form-control {% if form.mobile.errors %}is-invalid{% endif %}"
+                                            id="mobile"
+                                            name="mobile"
+                                            value="{{ form.mobile.data or '' }}"
+                                            placeholder="e.g. 0412 345 678"
+                                            required
+                                        >
+                                        {% for error in form.mobile.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6">
+                                        <label for="password" class="form-label">
+                                            Password
+                                        </label>
+
+                                        <input
+                                            type="password"
+                                            class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                                            id="password"
+                                            name="password"
+                                            placeholder="At least 8 characters"
+                                            required
+                                        >
+                                        {% for error in form.password.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6">
+                                        <label for="confirmPassword" class="form-label">
+                                            Confirm Password
+                                        </label>
+
+                                        <input
+                                            type="password"
+                                            class="form-control {% if form.confirm.errors %}is-invalid{% endif %}"
+                                            id="confirmPassword"
+                                            name="confirm"
+                                            required
+                                        >
+                                        {% for error in form.confirm.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
                                 </div>
 
-                                {{ form.submit(class='btn btn-danger w-100 mt-4') }}
+
+                                <button type="submit" class="btn btn-danger w-100 mt-4">
+                                    Create Account
+                                </button>
+
                             </form>
+
 
                             <p class="text-center mt-3 mb-0">
                                 Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a>
                             </p>
 
                         </div>
+
                     </div>
 
                 </div>
+
             </div>
+
         </div>
+
     </main>
 
 {% endblock %}
