@@ -55,6 +55,7 @@ class EventForm(FlaskForm):
         ('none', 'No Acknowledgement of Country'),
         ('generic', 'Acknowledgement of Country: generic'),
         ('enhanced', 'Acknowledgement of Country: enhanced')])
+    traditional_custodians = StringField('Traditional Custodians', validators=[Length(max=100)])
     spectator_access = BooleanField('Spectator access is available', default=True)
 
     submit = SubmitField('Create Event')
@@ -66,6 +67,10 @@ class EventForm(FlaskForm):
     def validate_end_time(self, field):
         if self.start_time.data and field.data <= self.start_time.data:
             raise ValidationError('End time needs to be after the start time')
+
+    def validate_traditional_custodians(self, field):
+        if self.acknowledgement.data == 'enhanced' and not field.data.strip():
+            raise ValidationError('Add the Traditional Custodians to use the enhanced acknowledgement')
 
 
 class EditEventForm(EventForm):

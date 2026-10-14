@@ -38,6 +38,11 @@ def search():
     return render_template('index.html', events=events, categories=categories, search=search)
 
 
+@mainbp.route('/traditional-custodians')
+def custodians():
+    return render_template('traditional-custodians.html')
+
+
 @mainbp.route('/bookings')
 @login_required
 def bookings():

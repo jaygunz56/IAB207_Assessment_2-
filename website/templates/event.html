@@ -114,11 +114,23 @@
                                 Acknowledgement of Country
                             </h2>
 
-                            <p class="mb-0">
-                                Triumph Motorevents acknowledges the Traditional
-                                Custodians of the land on which this event is held
-                                and pays respect to Elders past and present.
-                            </p>
+                            {% if event.acknowledgement == 'enhanced' and event.traditional_custodians %}
+                                <p>
+                                    Triumph Motorevents acknowledges the {{ event.traditional_custodians }}
+                                    people, the Traditional Custodians of the land on which this event is
+                                    held, and pays respect to their Elders past and present.
+                                </p>
+                            {% else %}
+                                <p>
+                                    Triumph Motorevents acknowledges the Traditional
+                                    Custodians of the land on which this event is held
+                                    and pays respect to Elders past and present.
+                                </p>
+                            {% endif %}
+
+                            <a href="{{ url_for('main.custodians') }}">
+                                Learn more about Traditional Custodians
+                            </a>
                         </div>
                         {% endif %}
 

@@ -391,6 +391,55 @@
 
 
                             <div class="col-12">
+                                <label for="traditionalCustodians" class="form-label">
+                                    Traditional Custodians
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control {% if form.traditional_custodians.errors %}is-invalid{% endif %}"
+                                    id="traditionalCustodians"
+                                    name="traditional_custodians"
+                                    value="{{ form.traditional_custodians.data or '' }}"
+                                    placeholder="e.g. the name of the people or nation for your venue"
+                                >
+                                {% for error in form.traditional_custodians.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                <div class="form-text">Only needed for the enhanced acknowledgement.</div>
+                            </div>
+
+
+                            <div class="col-12">
+                                <div class="acknowledgement-box">
+
+                                    <h3 class="h6">
+                                        Which acknowledgement should I pick?
+                                    </h3>
+
+                                    <p>
+                                        The <strong>generic</strong> option adds a standard Acknowledgement of
+                                        Country to your event page. It's a good choice if you're not sure who
+                                        the Traditional Custodians of your venue's land are.
+                                    </p>
+
+                                    <p>
+                                        The <strong>enhanced</strong> option names the Traditional Custodians
+                                        in the acknowledgement. Only use it if you're confident the name is
+                                        right, for example after checking with the local Land Council or
+                                        Traditional Owner group. If there's any doubt, stick with the generic one.
+                                    </p>
+
+                                    <p class="mb-0">
+                                        Not sure where to start?
+                                        <a href="{{ url_for('main.custodians') }}" target="_blank">Read our Traditional Custodian guide</a>.
+                                    </p>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
                                 <div class="form-check">
 
                                     <input

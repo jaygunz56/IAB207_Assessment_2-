@@ -59,6 +59,8 @@ class Event(db.Model):
     parking_info = db.Column(db.Text)
     # none, generic or enhanced
     acknowledgement = db.Column(db.String(20), default='none')
+    # only used for the enhanced acknowledgement
+    traditional_custodians = db.Column(db.String(100))
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
