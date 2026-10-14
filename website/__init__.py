@@ -2,6 +2,7 @@ from datetime import date
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect, CSRFError
 
 db = SQLAlchemy()
 
@@ -13,11 +14,11 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///triumph.sqlite'
 
     db.init_app(app)
+    # checks the csrf token on every form post, not just the wtforms ones
+    CSRFProtect(app)
 
     login_manager = LoginManager()
-    # send people here if they hit a page that needs a login
     login_manager.login_view = 'auth.login'
-    login_manager.login_message_category = 'warning'
     login_manager.init_app(app)
 
     # need to import models here so the tables get created
@@ -25,7 +26,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return db.session.get(models.User, int(user_id))
+        return db.session.scalar(db.select(models.User).where(models.User.id == user_id))
 
     with app.app_context():
         db.create_all()
@@ -43,7 +44,6 @@ def create_app():
             event.update_status()
         db.session.commit()
 
-    # so dates and times look the same on every page, e.g. 7 November 2026 and 9:30 AM
     @app.template_filter('nicedate')
     def nicedate(value):
         return value.strftime('%d %B %Y').lstrip('0')
@@ -51,6 +51,11 @@ def create_app():
     @app.template_filter('nicetime')
     def nicetime(value):
         return value.strftime('%I:%M %p').lstrip('0')
+
+    @app.errorhandler(CSRFError)
+    def csrf_error(e):
+        return render_template('error.html', code=400, title='Your session expired',
+                               message='Please go back, refresh the page and try that again.'), 400
 
     @app.errorhandler(403)
     def forbidden(e):
@@ -64,7 +69,7 @@ def create_app():
 
     @app.errorhandler(500)
     def server_error(e):
-        # undo anything half saved so the next request isn't broken too
+        # rollback in case something was half saved
         db.session.rollback()
         return render_template('error.html', code=500, title='Something went wrong',
                                message="That one's on us. Please try again in a minute."), 500

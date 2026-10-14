@@ -281,3 +281,6 @@ body {
         width: 100%;
     }
 }
+.event-description {
+    white-space: pre-line;
+}
