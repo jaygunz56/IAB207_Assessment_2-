@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
@@ -42,6 +42,32 @@ def create_app():
         for event in events:
             event.update_status()
         db.session.commit()
+
+    # so dates and times look the same on every page, e.g. 7 November 2026 and 9:30 AM
+    @app.template_filter('nicedate')
+    def nicedate(value):
+        return value.strftime('%d %B %Y').lstrip('0')
+
+    @app.template_filter('nicetime')
+    def nicetime(value):
+        return value.strftime('%I:%M %p').lstrip('0')
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template('error.html', code=403, title="You can't do that",
+                               message="You don't have permission to view or change this page."), 403
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('error.html', code=404, title='Page not found',
+                               message="We couldn't find what you were looking for. It might have been moved or never existed."), 404
+
+    @app.errorhandler(500)
+    def server_error(e):
+        # undo anything half saved so the next request isn't broken too
+        db.session.rollback()
+        return render_template('error.html', code=500, title='Something went wrong',
+                               message="That one's on us. Please try again in a minute."), 500
 
     from . import views
     app.register_blueprint(views.mainbp)

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Triumph Motorevents{% endblock %}
+
+{% block content %}
+
+    <main class="py-5">
+
+        <div class="container">
+
+            <div class="form-page-heading py-5">
+
+                <p class="hero-label mb-2">
+                    Error {{ code }}
+                </p>
+
+                <h1>
+                    {{ title }}
+                </h1>
+
+                <p class="text-secondary">
+                    {{ message }}
+                </p>
+
+                <a href="{{ url_for('main.index') }}" class="btn btn-danger mt-2">
+                    Back to Events
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}
