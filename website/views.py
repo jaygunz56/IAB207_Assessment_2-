@@ -16,7 +16,6 @@ def index():
     events = Event.query.filter(Event.date >= date.today())
 
     if selected:
-        # filtering by category only shows events you can still book
         events = events.join(Category).filter(Category.name == selected, Event.status == 'Open')
 
     events = events.order_by(Event.date, Event.start_time).all()
@@ -55,7 +54,6 @@ def bookings():
 def booking(id):
     booking = db.get_or_404(Booking, id)
 
-    # people can only see their own bookings
     if booking.user_id != current_user.id:
         abort(404)
 

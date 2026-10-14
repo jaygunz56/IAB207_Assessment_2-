@@ -100,7 +100,6 @@ def edit(id):
         ticket.price = form.ticket_price.data
         ticket.quantity_available = form.ticket_quantity.data
 
-        # might be sold out or open again depending on the new ticket numbers
         event.update_status()
 
         db.session.commit()
@@ -208,7 +207,7 @@ def get_venue(form):
 
 def check_upload_file(form):
     fp = form.image.data
-    # put the time on the front so two images with the same name don't overwrite each other
+    # add the time so files with the same name dont overwrite
     filename = datetime.now().strftime('%Y%m%d%H%M%S') + '_' + secure_filename(fp.filename)
 
     BASE_PATH = os.path.dirname(__file__)
