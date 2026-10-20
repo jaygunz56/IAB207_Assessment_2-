@@ -14,7 +14,8 @@ with app.app_context():
         exit()
 
     user = User(first_name='Demo', last_name='Organiser', email='demo@triumph.com',
-                mobile='0400 000 000', password_hash=generate_password_hash('password123'))
+                mobile='0400 000 000', street_address='1 George St, Brisbane QLD 4000',
+                password_hash=generate_password_hash('password123'))
     db.session.add(user)
 
     # dates are worked out from today so the events are always upcoming

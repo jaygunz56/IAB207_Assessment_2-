@@ -26,6 +26,7 @@ def register():
                     last_name=form.last_name.data.strip(),
                     email=email,
                     mobile=form.mobile.data.strip(),
+                    street_address=form.street_address.data.strip(),
                     password_hash=generate_password_hash(form.password.data))
         db.session.add(user)
         db.session.commit()

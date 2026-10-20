@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), index=True, unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     mobile = db.Column(db.String(20), nullable=False)
+    street_address = db.Column(db.String(200), nullable=False)
 
     events = db.relationship('Event', backref='creator')
     bookings = db.relationship('Booking', backref='user')
@@ -121,7 +122,6 @@ class Booking(db.Model):
 
     @property
     def reference(self):
-        # booking ids look like TM-10001 instead of just 1
         return 'TM-' + str(10000 + self.id)
 
     def __repr__(self):

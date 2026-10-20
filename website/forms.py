@@ -15,6 +15,7 @@ class RegisterForm(FlaskForm):
     mobile = StringField('Mobile number', validators=[
         InputRequired(),
         Regexp(r'^\+?[0-9 ]{8,15}$', message='Please enter a valid mobile number')])
+    street_address = StringField('Street address', validators=[InputRequired(), Length(max=200)])
     password = PasswordField('Password', validators=[
         InputRequired(),
         Length(min=8, message='Password needs to be at least 8 characters')])
