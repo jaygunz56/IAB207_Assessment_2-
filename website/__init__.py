@@ -1,3 +1,4 @@
+import os
 from datetime import date
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -10,7 +11,8 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
-    app.secret_key = 'triumphmotorevents'
+    # set SECRET_KEY on the server, the random key is only a fallback for running locally
+    app.secret_key = os.environ.get('SECRET_KEY') or os.urandom(24)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///triumph.sqlite'
 
     db.init_app(app)
