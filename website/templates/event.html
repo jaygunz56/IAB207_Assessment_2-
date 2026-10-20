@@ -257,16 +257,9 @@
                                 Edit Event
                             </a>
 
-                            <form
-                                action="{{ url_for('event.cancel', id=event.id) }}"
-                                method="post"
-                                onsubmit="return confirm('Are you sure you want to cancel this event?');"
-                            >
-                                {{ comment_form.csrf_token }}
-                                <button type="submit" class="btn btn-outline-danger w-100">
-                                    Cancel Event
-                                </button>
-                            </form>
+                            <a href="{{ url_for('event.cancel', id=event.id) }}" class="btn btn-outline-danger w-100">
+                                Cancel Event
+                            </a>
 
                         </div>
 

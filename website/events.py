@@ -127,7 +127,7 @@ def edit(id):
     return render_template('create-event.html', form=form, event=event)
 
 
-@eventbp.route('/<int:id>/cancel', methods=['POST'])
+@eventbp.route('/<int:id>/cancel', methods=['GET', 'POST'])
 @login_required
 def cancel(id):
     event = db.get_or_404(Event, id)
@@ -135,11 +135,19 @@ def cancel(id):
     if event.user_id != current_user.id:
         abort(403)
 
-    event.status = 'Cancelled'
-    db.session.commit()
+    if event.status == 'Cancelled':
+        flash('This event has already been cancelled', 'info')
+        return redirect(url_for('event.show', id=event.id))
 
-    flash('Your event has been cancelled', 'info')
-    return redirect(url_for('event.show', id=event.id))
+    # the GET shows the confirmation page, the POST from that page does the cancel
+    if request.method == 'POST':
+        event.status = 'Cancelled'
+        db.session.commit()
+
+        flash('Your event has been cancelled', 'info')
+        return redirect(url_for('event.show', id=event.id))
+
+    return render_template('cancel-event.html', event=event)
 
 
 @eventbp.route('/<int:id>/comment', methods=['POST'])

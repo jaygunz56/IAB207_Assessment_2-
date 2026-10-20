@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Cancel {{ event.title }} | Triumph Motorevents{% endblock %}
+
+{% block content %}
+
+    <main class="py-5">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+                <div class="col-lg-7">
+
+                    <div class="form-page-heading mb-4">
+
+                        <p class="hero-label mb-2">
+                            Event Management
+                        </p>
+
+                        <h1>
+                            Cancel {{ event.title }}?
+                        </h1>
+
+                        <p class="text-secondary">
+                            Once an event is cancelled it can't be booked or edited, and this can't be undone.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card event-form-card">
+
+                        <div class="card-body">
+
+                            <div class="row g-3 booking-details border-0 pt-0">
+
+                                <div class="col-6">
+
+                                    <span class="booking-label">
+                                        Date
+                                    </span>
+
+                                    <p class="mb-0">
+                                        {{ event.date | nicedate }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="col-6">
+
+                                    <span class="booking-label">
+                                        Venue
+                                    </span>
+
+                                    <p class="mb-0">
+                                        {{ event.venue.name }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="col-6">
+
+                                    <span class="booking-label">
+                                        Tickets Booked
+                                    </span>
+
+                                    <p class="mb-0">
+                                        {{ event.bookings | sum(attribute='quantity') }}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <form action="{{ url_for('event.cancel', id=event.id) }}" method="post">
+
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                                <div class="form-actions mt-4">
+
+                                    <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-outline-secondary">
+                                        Go Back
+                                    </a>
+
+                                    <button type="submit" class="btn btn-danger">
+                                        Yes, Cancel Event
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}
