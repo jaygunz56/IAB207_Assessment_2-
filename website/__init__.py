@@ -4,6 +4,7 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
+from flask_bootstrap import Bootstrap5
 
 db = SQLAlchemy()
 
@@ -18,6 +19,7 @@ def create_app():
     db.init_app(app)
     # checks the csrf token on every form post, not just the wtforms ones
     CSRFProtect(app)
+    Bootstrap5(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

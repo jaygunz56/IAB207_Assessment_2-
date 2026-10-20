@@ -1,3 +1,4 @@
+{% from 'bootstrap5/utils.html' import render_messages %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
 
     <title>{% block title %}Triumph Motorevents{% endblock %}</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{ bootstrap.load_css() }}
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
 </head>
@@ -74,18 +75,7 @@
         </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="container mt-3">
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+    {{ render_messages(container=True, dismissible=True, dismiss_animate=True) }}
 
     {% block content %}{% endblock %}
 
@@ -105,7 +95,7 @@
     </footer>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    {{ bootstrap.load_js() }}
 
 </body>
 </html>

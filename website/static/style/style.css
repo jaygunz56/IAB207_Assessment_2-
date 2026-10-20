@@ -284,3 +284,7 @@ body {
 .event-description {
     white-space: pre-line;
 }
+
+.flashed-messages {
+    margin-top: 1rem;
+}
