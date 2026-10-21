@@ -411,6 +411,29 @@
 
 
                             <div class="col-12">
+                                <label for="acknowledgementText" class="form-label">
+                                    Your Acknowledgement (optional)
+                                </label>
+
+                                <textarea
+                                    class="form-control {% if form.acknowledgement_text.errors %}is-invalid{% endif %}"
+                                    id="acknowledgementText"
+                                    name="acknowledgement_text"
+                                    rows="4"
+                                    maxlength="600"
+                                    placeholder="Write your own acknowledgement for this event..."
+                                >{{ form.acknowledgement_text.data or '' }}</textarea>
+                                {% for error in form.acknowledgement_text.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                <div class="form-text">
+                                    Only used with the enhanced acknowledgement. Leave it empty to use the standard
+                                    wording with the Traditional Custodians you entered above.
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
                                 <div class="acknowledgement-box">
 
                                     <h3 class="h6">
@@ -429,6 +452,18 @@
                                         right, for example after checking with the local Land Council or
                                         Traditional Owner group. If there's any doubt, stick with the generic one.
                                     </p>
+
+                                    <p>
+                                        With the enhanced option you can also write your own acknowledgement. A few
+                                        things to think about when writing it:
+                                    </p>
+
+                                    <ul>
+                                        <li>Name the Traditional Custodians and their Country the way they ask to be named</li>
+                                        <li>Say something genuine about the land your event is on, rather than copying a template</li>
+                                        <li>Pay respect to Elders past and present</li>
+                                        <li>Keep it to a few sentences so people actually read it</li>
+                                    </ul>
 
                                     <p class="mb-0">
                                         Not sure where to start?

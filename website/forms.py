@@ -57,6 +57,7 @@ class EventForm(FlaskForm):
         ('generic', 'Acknowledgement of Country: generic'),
         ('enhanced', 'Acknowledgement of Country: enhanced')])
     traditional_custodians = StringField('Traditional Custodians', validators=[Length(max=100)])
+    acknowledgement_text = TextAreaField('Your acknowledgement', validators=[Length(max=600)])
     spectator_access = BooleanField('Spectator access is available', default=True)
 
     submit = SubmitField('Create Event')

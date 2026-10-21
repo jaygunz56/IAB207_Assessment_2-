@@ -42,6 +42,7 @@ def create():
                       spectator_access=form.spectator_access.data,
                       acknowledgement=form.acknowledgement.data,
                       traditional_custodians=form.traditional_custodians.data.strip(),
+                      acknowledgement_text=form.acknowledgement_text.data.strip(),
                       category_id=form.category.data,
                       venue=get_venue(form),
                       creator=current_user)
@@ -89,6 +90,7 @@ def edit(id):
         event.spectator_access = form.spectator_access.data
         event.acknowledgement = form.acknowledgement.data
         event.traditional_custodians = form.traditional_custodians.data.strip()
+        event.acknowledgement_text = form.acknowledgement_text.data.strip()
         event.category_id = form.category.data
         event.venue = get_venue(form)
 
@@ -122,6 +124,7 @@ def edit(id):
         form.age_restriction.data = event.age_restriction
         form.acknowledgement.data = event.acknowledgement
         form.traditional_custodians.data = event.traditional_custodians
+        form.acknowledgement_text.data = event.acknowledgement_text
         form.spectator_access.data = event.spectator_access
 
     return render_template('create-event.html', form=form, event=event)

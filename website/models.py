@@ -62,6 +62,7 @@ class Event(db.Model):
     acknowledgement = db.Column(db.String(20), default='none')
     # only used for the enhanced acknowledgement
     traditional_custodians = db.Column(db.String(100))
+    acknowledgement_text = db.Column(db.Text)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
