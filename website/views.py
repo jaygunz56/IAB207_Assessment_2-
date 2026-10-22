@@ -30,7 +30,8 @@ def search():
 
     search = request.args['search'].strip()
     query = '%' + search + '%'
-    events = Event.query.filter(db.or_(Event.title.like(query), Event.description.like(query))) \
+    events = Event.query.join(Category) \
+        .filter(db.or_(Event.title.like(query), Event.description.like(query), Category.name.like(query))) \
         .order_by(Event.date).all()
 
     categories = Category.query.order_by(Category.name).all()
