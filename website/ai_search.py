@@ -1,5 +1,8 @@
 MODEL_NAME = 'all-MiniLM-L6-v2'
 
+# from testing, unrelated events score around 0.2 to 0.25, so anything under this isn't a real match
+MIN_SCORE = 0.3
+
 model = None
 
 

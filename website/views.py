@@ -1,8 +1,8 @@
 from datetime import date
-from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask import Blueprint, render_template, request, redirect, url_for, abort, current_app
 from flask_login import login_required, current_user
 from .models import Event, Category, Booking
-from .ai_search import rank_events
+from .ai_search import rank_events, MIN_SCORE
 from . import db
 
 mainbp = Blueprint('main', __name__)
@@ -30,10 +30,7 @@ def search():
         return redirect(url_for('main.index'))
 
     search = request.args['search'].strip()
-    query = '%' + search + '%'
-    events = Event.query.join(Category) \
-        .filter(db.or_(Event.title.like(query), Event.description.like(query), Category.name.like(query))) \
-        .order_by(Event.date).all()
+    events = keyword_search(search)
 
     categories = Category.query.order_by(Category.name).all()
     return render_template('index.html', events=events, categories=categories, search=search)
@@ -43,6 +40,8 @@ def search():
 def smart_search():
     search = request.args.get('q', '').strip()
     results = []
+    keyword_events = []
+    ai_failed = False
 
     # the ranking can take a few seconds, so show the loading page first and let it refresh into the results
     if search and not request.args.get('ready'):
@@ -50,9 +49,31 @@ def smart_search():
 
     if search:
         upcoming = Event.query.filter(Event.date >= date.today()).all()
-        results = rank_events(search, upcoming)
 
-    return render_template('smart-search.html', search=search, results=results)
+        try:
+            ranked = rank_events(search, upcoming)
+        except Exception:
+            # usually means the model couldn't be downloaded or loaded, so fall back to keyword search
+            current_app.logger.exception('Smart Search failed')
+            ranked = None
+
+        if ranked is None:
+            ai_failed = True
+            keyword_events = keyword_search(search)
+        else:
+            results = [(event, score) for event, score in ranked if score >= MIN_SCORE]
+            if not results:
+                keyword_events = keyword_search(search)
+
+    return render_template('smart-search.html', search=search, results=results,
+                           keyword_events=keyword_events, ai_failed=ai_failed)
+
+
+def keyword_search(search):
+    query = '%' + search + '%'
+    return Event.query.join(Category) \
+        .filter(db.or_(Event.title.like(query), Event.description.like(query), Category.name.like(query))) \
+        .order_by(Event.date).all()
 
 
 @mainbp.route('/traditional-custodians')
