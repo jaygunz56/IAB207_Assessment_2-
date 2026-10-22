@@ -7,6 +7,8 @@
 
     <title>{% block title %}Triumph Motorevents{% endblock %}</title>
 
+    {% block head %}{% endblock %}
+
     {{ bootstrap.load_css() }}
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">

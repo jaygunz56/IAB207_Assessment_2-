@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Searching... | Triumph Motorevents{% endblock %}
+
+{% block head %}
+    <meta http-equiv="refresh" content="0; url={{ url_for('main.smart_search', q=search, ready=1) }}">
+{% endblock %}
+
+{% block content %}
+
+    <main class="py-5">
+
+        <div class="container">
+
+            <div class="form-page-heading py-5">
+
+                <p class="hero-label mb-2">
+                    Smart Search
+                </p>
+
+                <h1>
+                    Searching for "{{ search }}"
+                </h1>
+
+                <p class="text-secondary">
+                    Comparing your search against every upcoming event. This can take a few seconds,
+                    especially the first time.
+                </p>
+
+                <div
+                    class="progress mt-4"
+                    role="progressbar"
+                    aria-label="Smart Search is running"
+                    style="height: 12px;"
+                >
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 100%"></div>
+                </div>
+
+                <p class="small text-secondary mt-3">
+                    Taking too long?
+                    <a href="{{ url_for('main.smart_search', q=search, ready=1) }}">Show results now</a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}

@@ -44,6 +44,10 @@ def smart_search():
     search = request.args.get('q', '').strip()
     results = []
 
+    # the ranking can take a few seconds, so show the loading page first and let it refresh into the results
+    if search and not request.args.get('ready'):
+        return render_template('smart-search-loading.html', search=search)
+
     if search:
         upcoming = Event.query.filter(Event.date >= date.today()).all()
         results = rank_events(search, upcoming)
