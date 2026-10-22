@@ -22,4 +22,4 @@ desktop.ini
 *.pdf
 
 # Event images uploaded while testing
-website/static/img/uploads/
+triumph_motorevents/static/img/uploads/

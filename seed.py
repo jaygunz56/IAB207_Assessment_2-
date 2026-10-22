@@ -3,8 +3,8 @@
 from datetime import date, time, timedelta
 from werkzeug.security import generate_password_hash
 
-from website import create_app, db
-from website.models import User, Category, Venue, Event, TicketType, Booking, Comment
+from triumph_motorevents import create_app, db
+from triumph_motorevents.models import User, Category, Venue, Event, TicketType, Booking, Comment
 
 app = create_app()
 
