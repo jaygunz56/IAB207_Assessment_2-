@@ -47,6 +47,9 @@
                         <a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">Events</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.smart_search' %}active{% endif %}" href="{{ url_for('main.smart_search') }}">Smart Search</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'event.create' %}active{% endif %}" href="{{ url_for('event.create') }}">Create Event</a>
                     </li>
                     <li class="nav-item">

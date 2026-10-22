@@ -1,5 +1,3 @@
-from sentence_transformers import util
-
 MODEL_NAME = 'all-MiniLM-L6-v2'
 
 model = None
@@ -22,6 +20,8 @@ def rank_events(search, events):
     # returns (event, score) pairs with the best match first, scores go from -1 to 1
     if not events:
         return []
+
+    from sentence_transformers import util
 
     model = get_model()
     search_embedding = model.encode(search, convert_to_tensor=True)

@@ -2,6 +2,7 @@ from datetime import date
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from .models import Event, Category, Booking
+from .ai_search import rank_events
 from . import db
 
 mainbp = Blueprint('main', __name__)
@@ -36,6 +37,18 @@ def search():
 
     categories = Category.query.order_by(Category.name).all()
     return render_template('index.html', events=events, categories=categories, search=search)
+
+
+@mainbp.route('/smart-search')
+def smart_search():
+    search = request.args.get('q', '').strip()
+    results = []
+
+    if search:
+        upcoming = Event.query.filter(Event.date >= date.today()).all()
+        results = rank_events(search, upcoming)
+
+    return render_template('smart-search.html', search=search, results=results)
 
 
 @mainbp.route('/traditional-custodians')
