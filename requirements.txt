@@ -4,4 +4,4 @@ flask-login
 flask-wtf
 bootstrap-flask
 email_validator
-sentence-transformers
+sentence-transformers==3.3.1
