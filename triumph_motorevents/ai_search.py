@@ -6,8 +6,10 @@ MODEL_NAME = 'all-MiniLM-L6-v2'
 # into a models folder in the project instead
 LOCAL_MODEL = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', MODEL_NAME)
 
-# from testing, unrelated events score around 0.2 to 0.25, so anything under this isn't a real match
-MIN_SCORE = 0.3
+# from testing on the live site, clearly unrelated searches score under 0.2. Searches that are
+# even loosely about motorsport score 0.25 and up against every event, so past this point the
+# ranking does the work rather than the cut-off
+MIN_SCORE = 0.2
 
 model = None
 
