@@ -23,3 +23,6 @@ desktop.ini
 
 # Event images uploaded while testing
 triumph_motorevents/static/img/uploads/
+
+# AI model files are too big for the repo, see ai_search.py
+models/

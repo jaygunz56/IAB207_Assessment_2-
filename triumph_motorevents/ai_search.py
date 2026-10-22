@@ -1,4 +1,10 @@
+import os
+
 MODEL_NAME = 'all-MiniLM-L6-v2'
+
+# hosts like PythonAnywhere can't download from Hugging Face, so the model can be saved
+# into a models folder in the project instead
+LOCAL_MODEL = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', MODEL_NAME)
 
 # from testing, unrelated events score around 0.2 to 0.25, so anything under this isn't a real match
 MIN_SCORE = 0.3
@@ -11,7 +17,10 @@ def get_model():
     global model
     if model is None:
         from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer(MODEL_NAME)
+        if os.path.isdir(LOCAL_MODEL):
+            model = SentenceTransformer(LOCAL_MODEL)
+        else:
+            model = SentenceTransformer(MODEL_NAME)
     return model
 
 
