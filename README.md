@@ -11,8 +11,8 @@ Live site: https://angusgillic.pythonanywhere.com
 ## Team
 
 - Angus Gillic - n11593636
-- Neranjaya (Jay) Gunaratne — n12055018 
-- Zante Martina — n11974834
+- Neranjaya (Jay) Gunaratne - n12055018 
+- Zante Martina - n11974834
 
 ## What it does
 
