@@ -84,3 +84,29 @@ PythonAnywhere has installed.
         ai_search.py         Smart Search ranking
         templates/           Jinja templates
         static/              CSS and images
+
+
+
+Due to me (Angus) giving Jay an early copy of the project files via a .zip file, i accidentally included my .git/config file. Thus, Jay has accidentally committed and pushed his work under my name (Angus Gillic). 
+
+This was an accidental Git configuration issue. To ensure the contribution history is represented accurately, the commits below were completed by Jay despite being attributed to me (Angus) in Git.
+
+6 October 2026:
+
+17:37, 99df61a IT3-1: Add Flask app factory and dependencies
+17:38, d631317 IT3-1: Add database models
+17:50, 76c374d IT3-4: Add base template and home route
+
+14 October 2026:
+
+09:33, 69480cc IT3-6, IT3-8: Add event details page and create event form
+09:34, eef1f57 IT3-7: Add keyword search
+09:44, c50c9e9 IT3-9, IT3-10, IT3-11: Add event editing and cancelling, comments and ticket booking
+
+21 October 2026
+
+12:24, df84aa7 Add Traditional Custodians for capital cities to the guidance page
+12:25, 4fc195d Add common acknowledgement mistakes to the guidance page
+12:30, b5c662c Let organisers write their own enhanced acknowledgement
+12:31, a97fdb7 Fix footer and booking history layout on small screens
+12:31, b16145f Shorten Traditional Custodians placeholder so it fits on mobile
