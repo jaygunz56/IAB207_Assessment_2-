@@ -110,3 +110,5 @@ This was an accidental Git configuration issue. To ensure the contribution histo
 12:30, b5c662c Let organisers write their own enhanced acknowledgement
 12:31, a97fdb7 Fix footer and booking history layout on small screens
 12:31, b16145f Shorten Traditional Custodians placeholder so it fits on mobile
+
+We opted to not change the Git history in order to preserve the reliability of the codebase. As we were informed that making changes to the git history could result in major aspects of the codebase to be deleted or lost. Hence, we wants to uphold the integrity of everyone's hard work and wanted to address this confusion ins the REAME and Assignment declaration. 
